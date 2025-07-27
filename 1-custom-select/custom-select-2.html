@@ -1,397 +1,387 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Custom Select</title>
+    <style>
+      @import 'https://unpkg.com/open-props' layer(design.system);
+      @import 'https://unpkg.com/open-props/normalize.min.css' layer(demo.support);
+      @import 'https://unpkg.com/open-props/buttons.min.css' layer(demo.support);
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Custom Select</title>
-  <style>
-    @import "https://unpkg.com/open-props" layer(design.system);
-    @import "https://unpkg.com/open-props/normalize.min.css" layer(demo.support);
-    @import "https://unpkg.com/open-props/buttons.min.css" layer(demo.support);
-
-
-    select {
-
-      /* opt into customizing select */
-      &,
-      &::picker(select) {
-        appearance: base-select;
-      }
-
-      font-size: var(--font-size-1);
-
-      /* removing open props normalize styles */
-      background: none;
-      padding: 0;
-
-      /* enable transitions in the drop down */
-      &::picker(select) {
-        transition:
-          opacity .2s ease,
-          transform .2s var(--ease-out-3),
-          display .2s allow-discrete,
-          overlay .2s allow-discrete;
-      }
-
-      &::picker-icon {
-        display: none;
-      }
-
-      /* set the off stage styles */
-      &:not(:open)::picker(select) {
-        opacity: 0;
-        transform: scale(.95);
-      }
-
-      /* set the on stage styles */
-      &:open::picker(select) {
-        opacity: 1;
-        transform: scale(1);
-      }
-
-      /* transition the selected option changing */
-      selectedcontent>* {
-        transition:
-          transform 1s var(--ease-spring-4),
-          display 1s allow-discrete,
-          opacity 1s;
-
-        @starting-style {
-          opacity: 0;
-          transform: translateY(10px);
+      select {
+        /* opt into customizing select */
+        &,
+        &::picker(select) {
+          appearance: base-select;
         }
 
-        opacity: 1;
-      }
+        font-size: var(--font-size-1);
 
-      /* customize the invoking button */
-      >button {
-        --_text: var(--text-1);
-
-        &:focus-visible {
-          outline-offset: -3px;
-        }
-
-        &:has(selectedcontent) {
-          align-items: start;
-          min-inline-size: 20ch;
-          flex-direction: column;
-        }
-
-        &.primary {
-          --_bg: var(--link);
-          --_border: none;
-          --_text: var(--surface-1);
-          --_ink-shadow: none;
-        }
-
-        >div {
-          inline-size: 100%;
-          display: flex;
-          justify-content: space-between;
-          gap: var(--size-3);
-        }
-
-        &>small {
-          color: var(--text-2);
-        }
-
-        & svg {
-          inline-size: 2ch;
-          transition: transform .3s var(--ease-elastic-out-2);
-        }
-      }
-
-      &:open>button svg {
-        transform: rotate(.5turn);
-      }
-
-      /* reset some picker styles */
-      &::picker(select) {
-        background: light-dark(white, var(--surface-2));
-        border-radius: var(--radius-2);
+        /* removing open props normalize styles */
+        background: none;
         padding: 0;
-        margin-block: 5px;
-        box-shadow: var(--shadow-5);
 
-        @media (forced-colors: none) {
-          border: none;
-        }
-      }
-
-      /* customize the picker contents */
-      >div {
-        min-inline-size: calc(anchor-size(self-inline) + 20px);
-        scroll-behavior: smooth;
-
-        &.scrollable {
-          max-block-size: 20lh;
-          scrollbar-width: thin;
+        /* enable transitions in the drop down */
+        &::picker(select) {
+          transition: opacity 0.2s ease, transform 0.2s var(--ease-out-3), display 0.2s allow-discrete, overlay 0.2s allow-discrete;
         }
 
-        & hr {
-          margin-block: var(--size-2);
+        &::picker-icon {
+          display: none;
         }
 
-        & label {
-          display: block;
-          position: sticky;
-          top: 0;
-          z-index: 1;
-          background: var(--surface-3);
-          font-size: var(--font-size-0);
-          color: var(--text-2);
-          font-weight: var(--font-weight-7);
-          padding-block: var(--size-1);
-          padding-inline: var(--size-3);
+        /* set the off stage styles */
+        &:not(:open)::picker(select) {
+          opacity: 0;
+          transform: scale(0.95);
         }
 
-        & option {
-          display: flex;
-          align-items: center;
-          gap: var(--size-3);
-          padding-block: var(--size-2);
-          padding-inline: var(--size-3);
-          font-size: var(--font-size-1);
+        /* set the on stage styles */
+        &:open::picker(select) {
+          opacity: 1;
+          transform: scale(1);
+        }
 
-          cursor: pointer;
-          outline-offset: -1px;
+        /* transition the selected option changing */
+        selectedcontent > * {
+          transition: transform 1s var(--ease-spring-4), display 1s allow-discrete, opacity 1s;
 
-          &::checkmark {
-            font-weight: var(--font-weight-8);
+          @starting-style {
+            opacity: 0;
+            transform: translateY(10px);
           }
+
+          opacity: 1;
+        }
+
+        /* customize the invoking button */
+        > button {
+          --_text: var(--text-1);
 
           &:focus-visible {
+            outline-offset: -3px;
+          }
+
+          &:has(selectedcontent) {
+            align-items: start;
+            min-inline-size: 20ch;
+            flex-direction: column;
+          }
+
+          &.primary {
+            --_bg: var(--link);
+            --_border: none;
+            --_text: var(--surface-1);
+            --_ink-shadow: none;
+          }
+
+          > div {
+            inline-size: 100%;
+            display: flex;
+            justify-content: space-between;
+            gap: var(--size-3);
+          }
+
+          & > small {
+            color: var(--text-2);
+          }
+
+          & svg {
+            inline-size: 2ch;
+            transition: transform 0.3s var(--ease-elastic-out-2);
+          }
+        }
+
+        &:open > button svg {
+          transform: rotate(0.5turn);
+        }
+
+        /* reset some picker styles */
+        &::picker(select) {
+          background: light-dark(white, var(--surface-2));
+          border-radius: var(--radius-2);
+          padding: 0;
+          margin-block: 5px;
+          box-shadow: var(--shadow-5);
+
+          @media (forced-colors: none) {
+            border: none;
+          }
+        }
+
+        /* customize the picker contents */
+        > div {
+          min-inline-size: calc(anchor-size(self-inline) + 20px);
+          scroll-behavior: smooth;
+
+          &.scrollable {
+            max-block-size: 20lh;
+            scrollbar-width: thin;
+          }
+
+          & hr {
+            margin-block: var(--size-2);
+          }
+
+          & label {
+            display: block;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: var(--surface-3);
+            font-size: var(--font-size-0);
+            color: var(--text-2);
+            font-weight: var(--font-weight-7);
+            padding-block: var(--size-1);
+            padding-inline: var(--size-3);
+          }
+
+          & option {
+            display: flex;
+            align-items: center;
+            gap: var(--size-3);
+            padding-block: var(--size-2);
+            padding-inline: var(--size-3);
+            font-size: var(--font-size-1);
+
+            cursor: pointer;
             outline-offset: -1px;
-          }
 
-          &:is(:focus, :hover) {
-            background: oklch(from var(--link) l c h / 25%);
-            color: inherit;
-          }
+            &::checkmark {
+              font-weight: var(--font-weight-8);
+            }
 
-          &:is(:checked) {
-            background: var(--link);
-            color: var(--surface-1);
-            font-weight: var(--font-weight-8);
+            &:focus-visible {
+              outline-offset: -1px;
+            }
+
+            &:is(:focus, :hover) {
+              background: oklch(from var(--link) l c h / 25%);
+              color: inherit;
+            }
+
+            &:is(:checked) {
+              background: var(--link);
+              color: var(--surface-1);
+              font-weight: var(--font-weight-8);
+            }
           }
         }
       }
-    }
 
-    /* utilities to aid in custom select children */
-    .custom-option {
-      display: flex;
-      gap: var(--size-3);
-      align-items: center;
-      justify-content: space-between;
+      /* utilities to aid in custom select children */
+      .custom-option {
+        display: flex;
+        gap: var(--size-3);
+        align-items: center;
+        justify-content: space-between;
 
-      .primary & {
-        display: grid;
-        gap: var(--size-1);
-      }
+        .primary & {
+          display: grid;
+          gap: var(--size-1);
+        }
 
-      &:has(.description) {
-        display: grid;
-        justify-items: start;
-        gap: var(--size-2);
-        padding-block: var(--size-2);
-        text-shadow: none;
+        &:has(.description) {
+          display: grid;
+          justify-items: start;
+          gap: var(--size-2);
+          padding-block: var(--size-2);
+          text-shadow: none;
 
-        & .description {
-          color: var(--text-2);
+          & .description {
+            color: var(--text-2);
+          }
+        }
+
+        option:is(:checked) & .description {
+          font-weight: normal;
+          color: var(--surface-2);
+        }
+
+        selectedcontent & .description {
+          display: none;
         }
       }
 
-      option:is(:checked) & .description {
-        font-weight: normal;
-        color: var(--surface-2);
+      .indicator {
+        display: inline-block;
+        block-size: var(--size-2);
+        inline-size: var(--size-2);
+        border-radius: var(--radius-round);
+        background: var(--gray-5);
+
+        &.success {
+          background: var(--green-5);
+        }
+
+        &.danger {
+          background: var(--red-5);
+        }
       }
 
-      selectedcontent & .description {
-        display: none;
-      }
-    }
-
-    .indicator {
-      display: inline-block;
-      block-size: var(--size-2);
-      inline-size: var(--size-2);
-      border-radius: var(--radius-round);
-      background: var(--gray-5);
-
-      &.success {
-        background: var(--green-5);
+      .option-text {
+        flex: 2;
       }
 
-      &.danger {
-        background: var(--red-5);
+      .avatar {
+        border-radius: var(--radius-round);
+        overflow: hidden;
       }
-    }
 
-    .option-text {
-      flex: 2;
-    }
-
-    .avatar {
-      border-radius: var(--radius-round);
-      overflow: hidden;
-    }
-
-
-
-
-
-
-
-    @layer demo.support {
-      body {
-        display: grid;
-        place-items: start;
-        place-content: center;
-        padding: var(--size-5);
-        gap: var(--size-5);
+      @layer demo.support {
+        body {
+          display: grid;
+          place-items: start;
+          place-content: center;
+          padding: var(--size-5);
+          gap: var(--size-5);
+        }
       }
-    }
-  </style>
-</head>
+    </style>
+  </head>
 
-<body>
-  <select>
-    <button>
+  <body>
+    <select>
+      <button>
+        <div>
+          <selectedcontent> </selectedcontent>
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path fill="currentColor" d="m7 10l5 5l5-5z" />
+          </svg>
+        </div>
+      </button>
       <div>
-        <selectedcontent> </selectedcontent>
-        <svg width="24" height="24" viewBox="0 0 24 24">
-          <path fill="currentColor" d="m7 10l5 5l5-5z" />
-        </svg>
+        <option value="on">
+          <!-- custom so it's fully consumed for selectedcontent -->
+          <div class="custom-option">
+            <span class="indicator success"></span>
+            <span class="option-text">On</span>
+          </div>
+        </option>
+        <option value="off">
+          <div class="custom-option">
+            <span class="indicator danger"></span>
+            <span class="option-text">Off</span>
+          </div>
+        </option>
+        <option value="disable">
+          <div class="custom-option">
+            <span class="indicator disable"></span>
+            <span class="option-text">Disable</span>
+          </div>
+        </option>
       </div>
-    </button>
-    <div>
-      <option value="on">
-        <!-- custom so it's fully consumed for selectedcontent -->
-        <div class="custom-option">
-          <span class="indicator success"></span>
-          <span class="option-text">On</span>
-        </div>
-      </option>
-      <option value="off">
-        <div class="custom-option">
-          <span class="indicator danger"></span>
-          <span class="option-text">Off</span>
-        </div>
-      </option>
-      <option value="disable">
-        <div class="custom-option">
-          <span class="indicator disable"></span>
-          <span class="option-text">Disable</span>
-        </div>
-      </option>
-    </div>
-  </select>
+    </select>
 
-  <select>
-    <button>
+    <select>
+      <button>
+        <div>
+          <selectedcontent></selectedcontent>
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path fill="currentColor" d="m7 10l5 5l5-5z" />
+          </svg>
+        </div>
+      </button>
       <div>
-        <selectedcontent></selectedcontent>
-        <svg width="24" height="24" viewBox="0 0 24 24">
-          <path fill="currentColor" d="m7 10l5 5l5-5z" />
-        </svg>
+        <option value="Sandhika Galih">
+          <div class="custom-option">
+            <span class="avatar">
+              <img width="30" height="30" src="https://pbs.twimg.com/profile_images/1886250190899978240/N47xvFbS_400x400.jpg" alt="" />
+            </span>
+            <span class="option-text">Sandhika Galih</span>
+          </div>
+        </option>
+        <option value="Avip Syaifulloh">
+          <div class="custom-option">
+            <span class="avatar">
+              <img
+                width="30"
+                height="30"
+                src="https://media.licdn.com/dms/image/v2/D5603AQEZM3WzTC1hGA/profile-displayphoto-shrink_800_800/B56ZV.EdBRHEAg-/0/1741576851962?e=1756339200&v=beta&t=Zmf0kGNO1WvS3UfPRKWxEY4fESVQVkFfSquVozGsqnQ"
+                alt=""
+              />
+            </span>
+            <span class="option-text">Avip Syaifulloh</span>
+          </div>
+        </option>
+        <option value="Agung Rizkyana">
+          <div class="custom-option">
+            <span class="avatar">
+              <img
+                width="30"
+                height="30"
+                src="https://media.licdn.com/dms/image/v2/D5603AQHiSZ5FMW3qAQ/profile-displayphoto-shrink_800_800/B56ZQ7vXOvGsAc-/0/1736169060960?e=1756339200&v=beta&t=wDuPH7q8AtIft1UUBSYryvwwerCEF7JqYQ6gY328Ua0"
+                alt=""
+              />
+            </span>
+            <span class="option-text">Agung Rizkyana</span>
+          </div>
+        </option>
       </div>
-    </button>
-    <div>
-      <option value="Una Kravets">
-        <div class="custom-option">
-          <span class="avatar">
-            <img width="20" height="20"
-              src="https://pbs.twimg.com/profile_images/1587634978308997121/u7009cGe_400x400.jpg" alt="">
-          </span>
-          <span class="option-text">Una Kravets</span>
-        </div>
-      </option>
-      <option value="Bramus Van Damme">
-        <div class="custom-option">
-          <span class="avatar">
-            <img width="20" height="20"
-              src="https://pbs.twimg.com/profile_images/1276240813333401600/brd0hSfW_400x400.jpg" alt="">
-          </span>
-          <span class="option-text">Bramus Van Damme</span>
-        </div>
-      </option>
-      <option value="Adam Argyle">
-        <div class="custom-option">
-          <span class="avatar">
-            <img width="20" height="20"
-              src="https://pbs.twimg.com/profile_images/1720589781476982784/P9Ld4vC5_400x400.jpg" alt="">
-          </span>
-          <span class="option-text">Adam Argyle</span>
-        </div>
-      </option>
-    </div>
-  </select>
+    </select>
 
-  <select id="colorspace">
-    <button>
-      <small>Color Space</small>
+    <select id="colorspace">
+      <button>
+        <small>Color Space</small>
+        <div>
+          <selectedcontent style="view-transition-name: foo"></selectedcontent>
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path fill="currentColor" d="m7 10l5 5l5-5z" />
+          </svg>
+        </div>
+      </button>
+      <div class="scrollable">
+        <div role="group">
+          <label>Standard</label>
+          <option value="srgb">rgb</option>
+          <option value="srgb-linear">srgb-linear</option>
+          <option value="hsl">hsl</option>
+          <option value="hwb">hwb</option>
+        </div>
+        <div role="group">
+          <label>HD</label>
+          <option value="display-p3">display-p3</option>
+          <option value="a98-rgb">a98-rgb</option>
+        </div>
+        <div role="group">
+          <label>Ultra HD</label>
+          <option value="lab">lab</option>
+          <option value="lch">lch</option>
+          <option value="oklch" selected>oklch</option>
+          <option value="oklab">oklab</option>
+          <option value="rec2020">rec2020</option>
+          <option value="prophoto">prophoto</option>
+          <option value="xyz">xyz</option>
+          <option value="xyz-d50">xyz-d50</option>
+          <option value="xyz-d65">xyz-d65</option>
+        </div>
+      </div>
+    </select>
+
+    <select class="primary">
+      <button>
+        <div>
+          <selectedcontent></selectedcontent>
+          <svg width="24" height="24" viewBox="0 0 24 24">
+            <path fill="currentColor" d="m7 10l5 5l5-5z" />
+          </svg>
+        </div>
+      </button>
       <div>
-        <selectedcontent style="view-transition-name: foo"></selectedcontent>
-        <svg width="24" height="24" viewBox="0 0 24 24">
-          <path fill="currentColor" d="m7 10l5 5l5-5z" />
-        </svg>
+        <option value="Published">
+          <div class="custom-option">
+            <div>Published</div>
+            <div class="description">Live on the web, available to anyone with the link.</div>
+          </div>
+        </option>
+        <option value="Draft">
+          <div class="custom-option">
+            <div>Draft</div>
+            <div class="description">Not available on the web, no public access.</div>
+          </div>
+        </option>
       </div>
-    </button>
-    <div class="scrollable">
-      <div role="group">
-        <label>Standard</label>
-        <option value="srgb">rgb</option>
-        <option value="srgb-linear">srgb-linear</option>
-        <option value="hsl">hsl</option>
-        <option value="hwb">hwb</option>
-      </div>
-      <div role="group">
-        <label>HD</label>
-        <option value="display-p3">display-p3</option>
-        <option value="a98-rgb">a98-rgb</option>
-      </div>
-      <div role="group">
-        <label>Ultra HD</label>
-        <option value="lab">lab</option>
-        <option value="lch">lch</option>
-        <option value="oklch" selected>oklch</option>
-        <option value="oklab">oklab</option>
-        <option value="rec2020">rec2020</option>
-        <option value="prophoto">prophoto</option>
-        <option value="xyz">xyz</option>
-        <option value="xyz-d50">xyz-d50</option>
-        <option value="xyz-d65">xyz-d65</option>
-      </div>
-    </div>
-  </select>
-
-  <select class="primary">
-    <button>
-      <div>
-        <selectedcontent></selectedcontent>
-        <svg width="24" height="24" viewBox="0 0 24 24">
-          <path fill="currentColor" d="m7 10l5 5l5-5z" />
-        </svg>
-      </div>
-    </button>
-    <div>
-      <option value="Published">
-        <div class="custom-option">
-          <div>Published</div>
-          <div class="description">Live on the web, available to anyone with the link.</div>
-        </div>
-      </option>
-      <option value="Draft">
-        <div class="custom-option">
-          <div>Draft</div>
-          <div class="description">Not available on the web, no public access.</div>
-        </div>
-      </option>
-    </div>
-  </select>
-</body>
-
+    </select>
+  </body>
 </html>
