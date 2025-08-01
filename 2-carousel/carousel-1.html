@@ -1,204 +1,194 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carousel Example 1</title>
+    <style>
+      * {
+        box-sizing: border-box;
+      }
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carousel Example 1</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+      body {
+        margin: 50px 0;
+        font-family: Arial, Helvetica, sans-serif;
+      }
 
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-    }
+      h1 {
+        text-align: center;
+        font-size: 1.7rem;
+      }
 
-    h1 {
-      text-align: center;
-      font-size: 1.7rem;
-    }
+      ul {
+        width: 90vw;
+        max-width: 1000px;
+        height: 300px;
+        padding: 10px;
+        margin: 30px auto;
+        text-align: center;
 
-    ul {
-      width: 90vw;
-      max-width: 1000px;
-      height: 300px;
-      padding: 10px;
-      margin: 50px auto;
-      text-align: center;
+        overflow-x: scroll;
+        columns: 1;
+        scrollbar-width: none;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+      }
 
-      overflow-x: scroll;
-      columns: 1;
-      scrollbar-width: none;
+      li {
+        list-style-type: none;
 
-      scroll-snap-type: x mandatory;
+        display: inline-block;
+        height: 100%;
+        width: 200px;
 
-      scroll-behavior: smooth;
-    }
+        background-color: #eee;
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin: 0 10px;
 
-    li {
-      list-style-type: none;
+        text-align: left;
+      }
 
-      display: inline-block;
-      height: 100%;
-      width: 200px;
+      ul::column {
+        scroll-snap-align: center;
+      }
 
-      background-color: #eee;
-      border: 1px solid #ddd;
-      padding: 20px;
-      margin: 0 10px;
+      ul::scroll-button(*) {
+        border: 0;
+        font-size: 1.4rem;
+        background: rgba(255, 255, 255, 0.2);
+        color: rgb(0 0 0 / 0.7);
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+        transition: background 0.3s ease;
+      }
 
-      text-align: left;
-    }
+      ul::scroll-button(*):hover,
+      ul::scroll-button(*):focus {
+        color: rgb(0 0 0 / 1);
+      }
 
-    ul::column {
-      scroll-snap-align: center;
-    }
+      ul::scroll-button(*):active {
+        translate: 1px 1px;
+      }
 
-    ul::scroll-button(*) {
-      border: 0;
-      font-size: 1.4rem;
-      background: rgba(255, 255, 255, 0.2);
-      color: rgb(0 0 0 / 0.7);
-      cursor: pointer;
-      width: 50px;
-      height: 50px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 10;
-      box-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
-      transition: background 0.3s ease;
-    }
+      ul::scroll-button(*):disabled {
+        color: rgb(0 0 0 / 0.4);
+        background: rgba(255, 255, 255, 0.1);
+        cursor: unset;
+      }
 
+      ul::scroll-button(left) {
+        content: '◄';
+      }
 
-    ul::scroll-button(*):hover,
-    ul::scroll-button(*):focus {
-      color: rgb(0 0 0 / 1);
-    }
+      ul::scroll-button(right) {
+        content: '►';
+      }
 
-    ul::scroll-button(*):active {
-      translate: 1px 1px;
-    }
+      ul {
+        anchor-name: --myCarousel;
+      }
 
-    ul::scroll-button(*):disabled {
-      color: rgb(0 0 0 / 0.4);
-      background: rgba(255, 255, 255, 0.1);
-      cursor: unset;
-    }
+      ul::scroll-button(*) {
+        position: absolute;
+        position-anchor: --myCarousel;
+      }
 
-    ul::scroll-button(left) {
-      content: "◄";
-    }
+      ul::scroll-button(left) {
+        right: calc(anchor(left) - 30px);
+        bottom: calc(anchor(top) - 170px);
+      }
 
-    ul::scroll-button(right) {
-      content: "►";
-    }
+      ul::scroll-button(right) {
+        left: calc(anchor(right) - 30px);
+        bottom: calc(anchor(top) - 170px);
+      }
 
+      ul {
+        scroll-marker-group: after;
+      }
 
-    ul {
-      anchor-name: --myCarousel;
-    }
+      ul::scroll-marker-group {
+        position: absolute;
+        position-anchor: --myCarousel;
+        top: calc(anchor(bottom) + 20px);
+        justify-self: anchor-center;
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
 
+      ul::column::scroll-marker {
+        content: '';
+        width: 16px;
+        height: 16px;
+        background-color: transparent;
+        border: 2px solid black;
+        border-radius: 10px;
+      }
 
-    ul::scroll-button(*) {
-      position: absolute;
-      position-anchor: --myCarousel;
-    }
+      ul::column::scroll-marker:target-current {
+        background-color: black;
+      }
+    </style>
+  </head>
 
-
-    ul::scroll-button(left) {
-      right: calc(anchor(left) - 30px);
-      bottom: calc(anchor(top) - 170px);
-    }
-
-    ul::scroll-button(right) {
-      left: calc(anchor(right) - 30px);
-      bottom: calc(anchor(top) - 170px);
-    }
-
-
-    ul {
-      scroll-marker-group: after;
-    }
-
-    ul::scroll-marker-group {
-      position: absolute;
-      position-anchor: --myCarousel;
-      top: calc(anchor(bottom) + 20px);
-      justify-self: anchor-center;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-
-    ul::column::scroll-marker {
-      content: "";
-      width: 16px;
-      height: 16px;
-      background-color: transparent;
-      border: 2px solid black;
-      border-radius: 10px;
-    }
-
-    ul::column::scroll-marker:target-current {
-      background-color: black;
-    }
-  </style>
-</head>
-
-<body>
-  <h1>CSS carousel multiple items per page</h1>
-  <ul>
-    <li>
-      <h2>Item 1</h2>
-    </li>
-    <li>
-      <h2>Item 2</h2>
-    </li>
-    <li>
-      <h2>Item 3</h2>
-    </li>
-    <li>
-      <h2>Item 4</h2>
-    </li>
-    <li>
-      <h2>Item 5</h2>
-    </li>
-    <li>
-      <h2>Item 6</h2>
-    </li>
-    <li>
-      <h2>Item 7</h2>
-    </li>
-    <li>
-      <h2>Item 8</h2>
-    </li>
-    <li>
-      <h2>Item 9</h2>
-    </li>
-    <li>
-      <h2>Item 10</h2>
-    </li>
-    <li>
-      <h2>Item 11</h2>
-    </li>
-    <li>
-      <h2>Item 12</h2>
-    </li>
-    <li>
-      <h2>Item 13</h2>
-    </li>
-    <li>
-      <h2>Item 14</h2>
-    </li>
-    <li>
-      <h2>Item 15</h2>
-    </li>
-  </ul>
-
-</body>
-
+  <body>
+    <h1>CSS Carousel</h1>
+    <ul>
+      <li>
+        <h2>Item 1</h2>
+      </li>
+      <li>
+        <h2>Item 2</h2>
+      </li>
+      <li>
+        <h2>Item 3</h2>
+      </li>
+      <li>
+        <h2>Item 4</h2>
+      </li>
+      <li>
+        <h2>Item 5</h2>
+      </li>
+      <li>
+        <h2>Item 6</h2>
+      </li>
+      <li>
+        <h2>Item 7</h2>
+      </li>
+      <li>
+        <h2>Item 8</h2>
+      </li>
+      <li>
+        <h2>Item 9</h2>
+      </li>
+      <li>
+        <h2>Item 10</h2>
+      </li>
+      <li>
+        <h2>Item 11</h2>
+      </li>
+      <li>
+        <h2>Item 12</h2>
+      </li>
+      <li>
+        <h2>Item 13</h2>
+      </li>
+      <li>
+        <h2>Item 14</h2>
+      </li>
+      <li>
+        <h2>Item 15</h2>
+      </li>
+    </ul>
+  </body>
 </html>
